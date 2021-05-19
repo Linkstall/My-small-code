@@ -1,0 +1,118 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+int main()
+{
+	//定义	
+	int insert,temp,max,dele,search;
+	int sz[100][2];
+	
+	
+	//初始化数组 
+	for(int i=0;i<100;i++)
+	{
+		for(int j=0;j<2;j++)
+		{
+			sz[i][j]=0; 
+		}
+	}
+	
+	
+	//输入数组
+	cout<<"按照系数（系数不可为0） 次数，依次填入，输入-1 -1表示结束"<<endl;;
+	for(int i=0;i<100;i++)
+	{
+		if(i>=1 && sz[i-1][0]==-1 && sz[i-1][1]==-1)
+		{
+			max=i-1;
+			break;
+		}
+		cin>>sz[i][0]>>sz[i][1];
+		if(sz[i][0]==0)
+		{
+			cout<<"系数不可为0，请从头重新输入系数和次数"<<endl;
+			for(int m=0;m<100;m++)
+			{
+				for(int n=0;n<2;n++)
+				{
+					sz[m][n]=0; 
+				}
+			}
+			i=-1;
+		}
+	} 
+	
+	
+	//第一次输出
+	cout<<"该线性表为：";
+	for(int i=0;i<100;i++)
+	{
+		if(sz[i][0]==-1 && sz[i][1]==-1) break;
+		else 	cout<<sz[i][0]<<"x^"<<sz[i][1]<<setw(5);
+	}
+	cout<<endl;
+	
+	
+	//插入操作
+	cout<<"要插入到第几个元素（原位置的元素及之后的元素都将会后移一位）"<<endl;
+	cin>>insert;
+	while(insert<=0 || insert-1>max) 
+	{
+		cout<<"该位置不合法！请重新输入"<<endl;
+		cin>>insert; 
+	}
+	max+=1;
+	cout<<"请输入所插入元素的系数和次数"<<endl;
+	for(int i=max;i>=insert-1;i--)
+	{
+		sz[i+1][0]=sz[i][0];
+		sz[i+1][1]=sz[i][1];
+	}
+	cin>>sz[insert-1][0]>>sz[insert-1][1];
+	
+	
+	//第二次输出
+	cout<<"该线性表为：";
+	for(int i=0;i<100;i++)
+	{
+		if(sz[i][0]==-1 && sz[i][1]==-1) break;
+		else 	cout<<sz[i][0]<<"x^"<<sz[i][1]<<setw(5);
+	}
+	cout<<endl;
+	
+	//删除操作
+	cout<<"请选择要删除的元素的位置（删除后之后的元素会前移）"<<endl;
+	cin>>dele;
+	while(dele<=0 || dele>max) 
+	{
+		cout<<"该位置不合法！请重新输入"<<endl;
+		cin>>dele; 
+	}
+	for(int i=dele;i<=max;i++)
+	{
+		sz[i-1][0]=sz[i][0];
+		sz[i-1][1]=sz[i][1];
+	} 
+	max-=1;
+	
+	//第三次输出
+	cout<<"该线性表为：";
+	for(int i=0;i<100;i++)
+	{
+		if(sz[i][0]==-1 && sz[i][1]==-1) break;
+		else 	cout<<sz[i][0]<<"x^"<<sz[i][1]<<setw(5);
+	}
+	cout<<endl;
+	
+	//查找功能
+	cout<<"请输入要查找的元素的位置"<<endl;
+	cin>>search;
+	while(search<=0 || search>max) 
+	{
+		cout<<"该位置不合法！请重新输入"<<endl;
+		cin>>search; 
+	}
+	cout<<"该元素为"<<sz[search-1][0]<<"x^"<<sz[search-1][1]<<endl;
+	cout<<"操作演示完毕";
+	return 0; 
+}
